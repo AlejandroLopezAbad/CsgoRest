@@ -11,6 +11,7 @@ import com.example.csgoapispring.repositories.PlayersRepository
 import com.example.csgoapispring.repositories.WeaponsRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.ResponseEntity
+import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
@@ -31,9 +32,12 @@ private val repoPlayer:PlayersRepository){
 
     }*/
 
+  //  @PreAuthorize("hasAnyRole('CHEATER','LEGITPLAYER')")
+     @PreAuthorize("hasRole('CHEATER')")
     @GetMapping("/list")
     fun getAllWeapons(): ResponseEntity<List<WeaponsDTO>> {
         val res = repo.findAll().map { it.toDto() }
         return ResponseEntity.ok(res)
     }
+
 }
